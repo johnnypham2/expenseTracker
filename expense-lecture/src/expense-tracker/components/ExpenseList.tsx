@@ -1,19 +1,24 @@
-interface Expense {
-  id: number;
-  description: string;
-  amount: number;
-  category: string;
-}
+import { TExpense } from "../../App";
+
+
 
 interface ExpenseProps {
-  expenses: Expense[];
-  onDelete: (id: number) => void;
+  expenses: TExpense[];
+  setExpenseArray: React.Dispatch<React.SetStateAction<TExpense[]>>
+  category: string
 }
 
-const ExpenseList = ({ expenses, onDelete }: ExpenseProps) => {
 
-  if(expenses.length == 0)
-    return null;
+const ExpenseList = ({ expenses,setExpenseArray,category}: ExpenseProps) => {
+
+
+
+  const onDelete = (expenseItemIndex:number) => {
+    const tempArray:TExpense[] = [...expenses];
+    tempArray.splice(expenseItemIndex,1)
+    setExpenseArray(tempArray);
+  }
+
   
   return (
     <>
@@ -27,15 +32,31 @@ const ExpenseList = ({ expenses, onDelete }: ExpenseProps) => {
           </tr>
         </thead>
         <tbody>
-          {expenses.map((expense) => (
-            <tr key={expense.id}>
+          {
+          category === "All" ? expenses.map((expense,idx) => (
+            <tr key={idx}>
               <td>{expense.description}</td>
               <td>{expense.amount}</td>
               <td>{expense.category}</td>
               <td>
                 <button
                   className="btn btn-outline-danger"
-                  onClick={() => onDelete(expense.id)}
+                  onClick={() => onDelete(idx)}
+                >
+                  Delete
+                </button>
+              </td>
+            </tr>
+          )) :
+          expenses.filter(expense => expense.category == category).map((expense,idx) => (
+            <tr key={idx}>
+              <td>{expense.description}</td>
+              <td>{expense.amount}</td>
+              <td>{expense.category}</td>
+              <td>
+                <button
+                  className="btn btn-outline-danger"
+                  onClick={() => onDelete(idx)}
                 >
                   Delete
                 </button>

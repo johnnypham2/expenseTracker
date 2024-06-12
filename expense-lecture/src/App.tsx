@@ -39,12 +39,12 @@ const App = () => {
       </div>
 
       <div className="m-5">
-        <ExpenseFilter
-          onSelectCategory={(category) => setSelectedCategory(category)}
-        />
+        {/* <ExpenseFilter
+          onSelectCategory={(category) => setSelectedCategory(category)} */}
+        {/* /> */}
       </div>
       <div className="m-5">
-        <ExpenseList category={selectedCategory} setExpenseArray={setExpenseArray} expenses={expenseArray}  />
+        {/* <ExpenseList category={selectedCategory} setExpenseArray={setExpenseArray} expenses={expenseArray}  /> */}
       </div>
     </>
   );

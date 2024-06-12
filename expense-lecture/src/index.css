@@ -1,3 +1,22 @@
 body {
-    background-color: bisque;
+    background-color: black;
+    color: aliceblue;
 }
+.expense-tracker-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+  
+  .form-container {
+    /* Add any additional styles for the form container */
+  }
+  
+  .table-container {
+    /* Add any additional styles for the table container */
+  }
+  
+  .category-filter {
+    margin-top: 1rem;
+  }
+  

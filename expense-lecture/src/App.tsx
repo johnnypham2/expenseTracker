@@ -4,15 +4,13 @@ import ExpenseFilter from "./expense-tracker/components/ExpenseFilter";
 import ExpenseForm from "./expense-tracker/components/ExpenseForm";
 import categories from "./expense-tracker/Categories";
 
-
 export type TExpense = {
-  description: string,
-  amount: number,
-  category: string
+  description: string;
+  amount: number;
+  category: string;
 };
 
 const App = () => {
-
   const [expenseArray, setExpenseArray] = useState<TExpense[]>([]);
   const [selectedCategory, setSelectedCategory] = useState("");
 
@@ -24,18 +22,19 @@ const App = () => {
     { id: 5, description: "eee", amount: 16, category: "Groceries" },
   ]);
 
-   // const visibleExpense = selectedCategory
+  // const visibleExpense = selectedCategory
   //   ? expenseArray.filter((e) => e.category === selectedCategory)
   //   : expenseArray;
-
-  
 
   return (
     <>
       <h1 className="text-center">Expense Tracker</h1>
 
       <div className="mb-5">
-        <ExpenseForm expenseArray={expenseArray} setExpenseArray={setExpenseArray}/>
+        <ExpenseForm
+          expenseArray={expenseArray}
+          setExpenseArray={setExpenseArray}
+        />
       </div>
 
       <div className="m-5">

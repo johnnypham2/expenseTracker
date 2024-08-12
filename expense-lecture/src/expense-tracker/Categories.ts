@@ -1,3 +1,10 @@
-const categories = ['All','Groceries', 'Utils', 'Entertainment', 'Food', 'Shopping'];
+const categories = [
+  "All",
+  "Groceries",
+  "Utils",
+  "Entertainment",
+  "Food",
+  "Shopping",
+];
 
-export default categories
+export default categories;

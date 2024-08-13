@@ -5,6 +5,7 @@ import ExpenseForm from "./expense-tracker/components/ExpenseForm";
 import categories from "./expense-tracker/Categories";
 
 export type TExpense = {
+  id: number,
   description: string;
   amount: number;
   category: string;

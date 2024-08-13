@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { TExpense } from "../../App";
+import { DeleteExpense, EditExpense, GetAllExpenses } from '../endpoints/endpoints';
 
 interface ExpenseProps {
   expenses: TExpense[];
@@ -11,22 +12,22 @@ const ExpenseList = ({ expenses, setExpenseArray, category }: ExpenseProps) => {
   const [editingIndex, setEditingIndex] = useState<number | null>(null);
   const [editedExpense, setEditedExpense] = useState<TExpense | null>(null);
 
-  const onDelete = (expenseItemIndex: number) => {
-    const tempArray: TExpense[] = [...expenses];
-    tempArray.splice(expenseItemIndex, 1);
-    setExpenseArray(tempArray);
+  const onDelete = async (expenseId: number) => {
+    await DeleteExpense(expenseId);
+    const data = await GetAllExpenses();
+    setExpenseArray(data);
   };
 
-  const onEdit = (expenseItemIndex: number) => {
-    setEditingIndex(expenseItemIndex);
-    setEditedExpense({ ...expenses[expenseItemIndex] });
+  const onEdit = (expense: TExpense) => {
+    setEditingIndex(expense.id);
+    setEditedExpense(expense);
   };
 
-  const onSave = () => {
+  const onSave = async () => {
     if (editingIndex !== null && editedExpense) {
-      const tempArray: TExpense[] = [...expenses];
-      tempArray[editingIndex] = editedExpense;
-      setExpenseArray(tempArray);
+      await EditExpense(editedExpense)
+      const data = await GetAllExpenses();
+      setExpenseArray(data);
       setEditingIndex(null);
       setEditedExpense(null);
     }
@@ -50,10 +51,10 @@ const ExpenseList = ({ expenses, setExpenseArray, category }: ExpenseProps) => {
         </thead>
         <tbody>
           {(category === "All" ? expenses : expenses.filter((expense) => expense.category === category))
-            .map((expense, idx) => (
-              <tr key={idx}>
+            .map((expense) => (
+              <tr key={expense.id}>
                 <td>
-                  {editingIndex === idx ? (
+                  {editingIndex === expense.id ? (
                     <input
                       type="text"
                       value={editedExpense?.description}
@@ -64,7 +65,7 @@ const ExpenseList = ({ expenses, setExpenseArray, category }: ExpenseProps) => {
                   )}
                 </td>
                 <td>
-                  {editingIndex === idx ? (
+                  {editingIndex === expense.id ? (
                     <input
                       type="number"
                       value={editedExpense?.amount}
@@ -75,7 +76,7 @@ const ExpenseList = ({ expenses, setExpenseArray, category }: ExpenseProps) => {
                   )}
                 </td>
                 <td>
-                  {editingIndex === idx ? (
+                  {editingIndex === expense.id ? (
                     <input
                       type="text"
                       value={editedExpense?.category}
@@ -86,15 +87,15 @@ const ExpenseList = ({ expenses, setExpenseArray, category }: ExpenseProps) => {
                   )}
                 </td>
                 <td>
-                  {editingIndex === idx ? (
+                  {editingIndex === expense.id ? (
                     <>
-                      <button className="btn btn-outline-success me-2" onClick={onSave}>Save</button>
+                      <button className="btn btn-outline-success me-2" onClick={async () => await onSave()}>Save</button>
                       <button className="btn btn-outline-secondary" onClick={onCancel}>Cancel</button>
                     </>
                   ) : (
                     <>
-                      <button className="btn btn-outline-primary me-2" onClick={() => onEdit(idx)}>Edit</button>
-                      <button className="btn btn-outline-danger" onClick={() => onDelete(idx)}>Delete</button>
+                      <button className="btn btn-outline-primary me-2" onClick={() => onEdit(expense)}>Edit</button>
+                      <button className="btn btn-outline-danger" onClick={async () => await onDelete(expense.id)}>Delete</button>
                     </>
                   )}
                 </td>

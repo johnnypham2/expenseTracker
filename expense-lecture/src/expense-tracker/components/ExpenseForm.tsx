@@ -3,7 +3,7 @@ import { TExpense } from "../../App";
 import { useEffect, useState } from "react";
 import { z } from "zod";
 import ExpenseList from "./ExpenseList";
-import { GetAllExpenses } from "../endpoints/endpoints";
+import { GetAllExpenses,CreateExpenses } from "../endpoints/endpoints";
 
 const expenseSchema = z.object({
   description: z.string().min(1, "Description is required"),
@@ -26,35 +26,27 @@ const ExpenseForm = ({ expenseArray, setExpenseArray }: ExpenseFormProp) => {
     const fetchData = async () => {
       try {
         const data = await GetAllExpenses();
+        
         setExpenseArray(data); 
+        
       } catch (error) {
         console.error("Error fetching expenses:", error);
         
       }
     };
-  
     fetchData();
+    
   }, [setExpenseArray]);
   
 
-  const AddExpenses = () => {
-    const validationResult = expenseSchema.safeParse({
-      description,
-      amount,
-    });
-
-    if (!validationResult.success) {
-      // If validation fails, set an error message
-      setError(validationResult.error.errors.map((e) => e.message).join(", "));
-      return;
-    }
-    // If validation passes, clear the error message and add the expense
-    setError(null);
+  const AddExpenses = async () => {
     const expense: TExpense = {
+      id: 0,
       description: description,
       amount: amount,
       category: category,
     };
+    await CreateExpenses(expense);
     const newArray: TExpense[] = [...expenseArray, expense];
     setExpenseArray(newArray);
   };

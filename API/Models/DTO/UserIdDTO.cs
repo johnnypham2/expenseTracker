@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace API.Services.Context
+namespace API.Models.DTO
 {
-    public class DataContext 
+    public class UserIdDTO
     {
         
     }

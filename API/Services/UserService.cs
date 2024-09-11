@@ -1,14 +1,19 @@
 using System;
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
+using System.Security.Claims;
 using System.Security.Cryptography;
+using System.Text;
 using API.Data;
 using API.Models;
 using API.Models.DTO;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
 
 
 namespace API.Services
 {
-    public class UserService
+    public class UserService : ControllerBase
     {
         private readonly AppDbContext _context;
 
@@ -33,6 +38,21 @@ namespace API.Services
             if(!DoesUserExist(userToAdd.Username))
             {
                 UserModels User = new UserModels();
+
+                UserModels newUser = new UserModels();
+
+                var newHashedPassword = HashPassword(userToAdd.Password);
+
+                newUser.Id = userToAdd.Id;
+                newUser.Username = userToAdd.Username;
+                newUser.Salt = newHashedPassword.Salt;
+                newUser.Hash = newHashedPassword.Hash;
+
+                _context.Add(newUser);
+
+                result = _context.SaveChanges() !=0;
+
+
             }
             return result;
         }
@@ -57,11 +77,79 @@ namespace API.Services
         }
 
 
+        public bool VerifyUserPassword(string? Password, string?StoredHash, string? StoredSalt)
+        {
+            var SaltBytes = Convert.FromBase64String(StoredSalt);
+            var Rfc2898DeriveBytes = new Rfc2898DeriveBytes(Password, SaltBytes, 10000);
+            var newHash = Convert.ToBase64String(Rfc2898DeriveBytes.GetBytes(256));
+            return newHash == StoredHash;
+        }
 
+        public IEnumerable<UserModels> GetAllUsers()
+        {
+            return _context.UserInfo;
+        }
 
+        public IActionResult Login(LoginDTO user)
+        {
+            IActionResult Result = Unauthorized();
+            if(DoesUserExist(user.UserName))
+            {
+            var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("reallylongsupersuperkeysuperSecretKey@345"));
+            var signinCredentials = new SigningCredentials(secretKey, SecurityAlgorithms.HmacSha256);
+            var tokenOptions = new JwtSecurityToken(
+                issuer: "https://localhost:5001",
+                audience: "https://localhost:5001",
+                claims: new List<Claim>(),
+                expires: DateTime.Now.AddMinutes(5),
+                signingCredentials: signinCredentials
+            );
+            var tokenString = new JwtSecurityTokenHandler().WriteToken(tokenOptions);
+            Result = Ok(new  { Token = tokenString }); 
+            }
+            return Result;
+        }
 
+        internal UserIdDTO GetUserIdDTOByUserName(string username)
+        {
+            throw new NotImplementedException();
+        }
 
+        public UserModels GetUserByUsername(string? username)
+        {
+            return _context.UserInfo.SingleOrDefault(user => user.Username == username);
+        }
 
+        public bool DeleteUser(string userToDelete)
+        {
+            UserModels foundUser = GetUserByUsername(userToDelete);
+            bool result = false;
+            if(foundUser != null)
+            {
+                foundUser.Username = userToDelete;
+                _context.Remove<UserModels>(foundUser);
+                result = _context.SaveChanges() != 0;
+            }
+            return result;
+        }
+
+        public UserModels GetUserById(int id)
+        {
+            return _context.UserInfo.SingleOrDefault(user => user.Id == id);
+        }
+
+        public bool UpdateUser(int id, string username)
+        {
+            UserModels foundUser = GetUserById(id);
+            bool result = false;
+            if(foundUser != null)
+            {
+                foundUser.Username = username;
+                _context.Update<UserModels>(foundUser);
+                result = _context.SaveChanges() != 0;
+            }
+            return result;
+        }
     }
 
 }

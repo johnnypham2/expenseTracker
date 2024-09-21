@@ -1,5 +1,5 @@
 import categories from "../Categories";
-import { TExpense } from "../../App";
+import { TExpense } from "../components/ExpensePage";
 import { useEffect, useState } from "react";
 import { z } from "zod";
 import ExpenseList from "./ExpenseList";

@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Flame\\Desktop\\New folder\\lvl3\\expenseTracker\\api\\API.csproj": {}
+    "C:\\Users\\Flame\\Desktop\\New folder\\lvl3\\expenseTracker\\API\\API.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Flame\\Desktop\\New folder\\lvl3\\expenseTracker\\api\\API.csproj": {
+    "C:\\Users\\Flame\\Desktop\\New folder\\lvl3\\expenseTracker\\API\\API.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Flame\\Desktop\\New folder\\lvl3\\expenseTracker\\api\\API.csproj",
+        "projectUniqueName": "C:\\Users\\Flame\\Desktop\\New folder\\lvl3\\expenseTracker\\API\\API.csproj",
         "projectName": "API",
-        "projectPath": "C:\\Users\\Flame\\Desktop\\New folder\\lvl3\\expenseTracker\\api\\API.csproj",
+        "projectPath": "C:\\Users\\Flame\\Desktop\\New folder\\lvl3\\expenseTracker\\API\\API.csproj",
         "packagesPath": "C:\\Users\\Flame\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Flame\\Desktop\\New folder\\lvl3\\expenseTracker\\api\\obj\\",
+        "outputPath": "C:\\Users\\Flame\\Desktop\\New folder\\lvl3\\expenseTracker\\API\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Flame\\AppData\\Roaming\\NuGet\\NuGet.Config"

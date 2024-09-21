@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { TExpense } from "../../App";
+import { TExpense } from "../components/ExpensePage";
 import { DeleteExpense, EditExpense, GetAllExpenses } from '../endpoints/endpoints';
 
 interface ExpenseProps {

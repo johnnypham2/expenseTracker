@@ -1,6 +1,6 @@
 body {
     background-color: black;
-    color: aliceblue;
+    color: black;
 }
 .expense-tracker-container {
     display: grid;

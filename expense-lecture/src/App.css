@@ -1,67 +1,81 @@
 .login-container {
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  
-  .login-form {
-    background-color: white;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
-    width: 300px;
-  }
-  
-  .login-form h2 {
-    text-align: center;
-    margin-bottom: 20px;
-  }
-  
-  .form-group {
-    margin-bottom: 15px;
-  }
-  
-  .form-group label {
-    display: block;
-    margin-bottom: 5px;
-    font-size: 14px;
-  }
-  
-  .form-group input {
-    width: 100%;
-    padding: 10px;
-    font-size: 14px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-  }
-  
-  .login-button {
-    width: 100%;
-    padding: 10px;
-    background-color: #007BFF;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-  
-  .login-button:hover {
-    background-color: #0056b3;
-  }
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
-  .toggle-text {
-    color: #5588be;
-  }
+.login-form {
+  background-color: rgb(44, 30, 240);
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+  width: 300px;
+}
 
-  .toggle-text:hover {
-    font-weight: bold;
-    color: rgb(25, 25, 97);
-  }
+.login-form h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
 
-  .logout {
-    float: right;
-    background-color: red;
-    color: white;
-    font-weight: bold;
-  }
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 5px;
+  font-size: 14px;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 10px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.password-container {
+  display: flex;
+  align-items: center;
+}
+
+.toggle-password {
+  cursor: pointer;
+  padding-left: 10px;
+  font-size: 1.2em;
+}
+
+.login-button {
+  width: 100%;
+  padding: 10px;
+  background-color: #007BFF;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.login-button:disabled {
+  background-color: #ccc;
+}
+
+.login-button:hover:not(:disabled) {
+  background-color: #0056b3;
+}
+
+.error-message {
+  color: red;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.toggle-text {
+  color: #5588be;
+}
+
+.toggle-text:hover {
+  font-weight: bold;
+  color: rgb(25, 25, 97);
+}
